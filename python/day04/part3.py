@@ -1,13 +1,10 @@
-import re
-from collections import deque, defaultdict, namedtuple
-from dataclasses import dataclass
-from typing import Deque, Dict, List, Match, Optional, Set, Tuple
+from collections import namedtuple
+from typing import List
+
+TrashBag = namedtuple("TrashBag", ["x", "y"])
 
 
-Coords = namedtuple("Coords", ["x", "y"])
-
-
-def parse(filename: str) -> List[str]:
+def parse(filename: str) -> List[TrashBag]:
     with open(filename, "r") as fp:
         data: List[str] = fp.read().splitlines()
 
@@ -15,12 +12,12 @@ def parse(filename: str) -> List[str]:
 
     for line in data:
         split_line: List[str] = line.split(",")
-        trash_bags.append(Coords(int(split_line[0]), int(split_line[1])))
+        trash_bags.append(TrashBag(int(split_line[0]), int(split_line[1])))
 
     return trash_bags
 
 
-def solve(trash_bags: List[str]) -> int:
+def solve(trash_bags: List[TrashBag]) -> int:
     current_x: int = 0
     current_y: int = 0
     steps: int = 0
@@ -36,8 +33,8 @@ def solve(trash_bags: List[str]) -> int:
 
 
 def solution(filename: str) -> int:
-    data: List[str] = parse(filename)
-    return solve(data)
+    trash_bags: List[TrashBag] = parse(filename)
+    return solve(trash_bags)
 
 
 if __name__ == "__main__":
