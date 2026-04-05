@@ -1,31 +1,28 @@
-import re
-from collections import deque, defaultdict, namedtuple
 from dataclasses import dataclass
-from typing import Deque, Dict, List, Match, Optional, Set, Tuple
+from typing import Dict, Tuple
 
-Tunnel = namedtuple("Tunnel", ["entrance", "exit"])
 
-def parse(filename: str) -> List[str]:
+@dataclass
+class Tunnel:
+    entrance: int
+    exit: int
+
+
+def parse(filename: str) -> Tuple[str, Dict[str, Tunnel]]:
     with open(filename, "r") as fp:
-        data: List[str] = fp.read().strip()
+        data: str = fp.read().strip()
 
-    tunnels_ = {}
+    tunnels: Dict[str, Tunnel] = {}
     for i, char in enumerate(data):
-        if char not in tunnels_:
-            tunnels_[char] = []
-        tunnels_[char].append(i)
-
-    # for k, v in tunnels.items():
-    #     print(k, v)
-
-    tunnels = {}
-    for k, v in tunnels_.items():
-        tunnels[k] = Tunnel(v[0], v[1])
+        if char not in tunnels:
+            tunnels[char] = Tunnel(i, 0)
+        else:
+            tunnels[char].exit = i
 
     return data, tunnels
 
 
-def solve(data: List[str], tunnels) -> int:
+def solve(data: str, tunnels: Dict[str, Tunnel]) -> str:
     index: int = 0
     steps: int = 0
 
@@ -46,11 +43,11 @@ def solve(data: List[str], tunnels) -> int:
     return "".join(not_visited)
 
 
-def solution(filename: str) -> int:
+def solution(filename: str) -> str:
     data, tunnels = parse(filename)
     return solve(data, tunnels)
 
 
 if __name__ == "__main__":
-    print(solution("./example.txt"))  # 38
-    print(solution("./input.txt"))  # 1955
+    print(solution("./example.txt"))  # "Bc"
+    print(solution("./input.txt"))  # "eBnXhWDRUCbVZw"
