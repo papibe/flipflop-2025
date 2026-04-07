@@ -38,6 +38,6 @@ func solution(filename string) int {
 }
 
 func main() {
-	fmt.Println(solution("./example.txt")) // 16
-	fmt.Println(solution("./input.txt"))   // 5250
+	fmt.Println(solution("./example.txt")) // 19
+	fmt.Println(solution("./input.txt"))   // 3161
 }
