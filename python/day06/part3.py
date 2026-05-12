@@ -1,12 +1,10 @@
-import re
-from collections import deque, defaultdict, namedtuple
-from dataclasses import dataclass
-from typing import Deque, Dict, List, Match, Optional, Set, Tuple
-
+from collections import namedtuple
+from typing import List
 
 Speed = namedtuple("Speed", ["x_step", "y_step"])
 
-def parse(filename: str) -> List[str]:
+
+def parse(filename: str) -> List[Speed]:
     with open(filename, "r") as fp:
         data: List[str] = fp.read().splitlines()
 
@@ -21,7 +19,7 @@ def parse(filename: str) -> List[str]:
     return speeds
 
 
-def solve(speeds: List[str]) -> int:
+def solve(speeds: List[Speed]) -> int:
     n_birds: int = 0
 
     for picture in range(1, 1_000 + 1):
@@ -37,7 +35,7 @@ def solve(speeds: List[str]) -> int:
 
 
 def solution(filename: str) -> int:
-    data: List[str] = parse(filename)
+    data: List[Speed] = parse(filename)
     return solve(data)
 
 

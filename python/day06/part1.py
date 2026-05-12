@@ -1,12 +1,10 @@
-import re
-from collections import deque, defaultdict, namedtuple
-from dataclasses import dataclass
-from typing import Deque, Dict, List, Match, Optional, Set, Tuple
-
+from collections import namedtuple
+from typing import List, Tuple
 
 Speed = namedtuple("Speed", ["x_step", "y_step"])
 
-def parse(filename: str) -> List[str]:
+
+def parse(filename: str) -> List[Speed]:
     with open(filename, "r") as fp:
         data: List[str] = fp.read().splitlines()
 
@@ -21,10 +19,9 @@ def parse(filename: str) -> List[str]:
     return speeds
 
 
-def solve(speeds: List[str]) -> int:
-    total_sum: int = 0
+def solve(speeds: List[Speed]) -> int:
+    positions: List[Tuple[int, int]] = []
 
-    positions = []
     for x_step, y_step in speeds:
         x_final: int = (x_step * 100) % 1_000
         y_final: int = (y_step * 100) % 1_000
@@ -36,15 +33,13 @@ def solve(speeds: List[str]) -> int:
         if 251 <= x_final <= 749 and 251 <= y_final <= 749:
             n_birds += 1
 
-
     return n_birds
 
 
 def solution(filename: str) -> int:
-    data: List[str] = parse(filename)
-    return solve(data)
+    speeds: List[Speed] = parse(filename)
+    return solve(speeds)
 
 
 if __name__ == "__main__":
-    # print(solution("./example.txt"))  # 0
-    print(solution("./input.txt"))  # 0
+    print(solution("./input.txt"))  # 260
